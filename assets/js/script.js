@@ -5,9 +5,8 @@
     const form = document.querySelector('.to-do__form');
     const input = document.querySelector('.input');
     const list = document.querySelector('.list');
-    const  p  = document.querySelector('.text');
+    const  errorMessage  = document.querySelector('.text');
   
-
 
         const createListItem = (task, id, isActive = false) =>{
             const li = document.createElement('li');
@@ -19,11 +18,10 @@
             li.dataset.id = id;
             const img = document.createElement('img');
             img.classList.add("delete");
-            img.src = "./icon/trash.png";
+            img.src = "./assets/icon/trash.png";
             li.append(img);
             list.prepend(li);
         }
-
             const  getData = async() => {
             try {
                 const response = await fetch('http://localhost:3000/list');
@@ -35,9 +33,6 @@
                 console.log("Упс...");
             }
         }
-
-        getData();
-
 
         list.addEventListener('click', async event => {
             if (event.target.tagName === "LI") {
@@ -59,16 +54,16 @@
             }
         });
          
-        const checkedValue = event => event.target.value.length >= 35? p.style.display = "block": p.style.display = "none"
+        const checkedValue = event => event.target.value.length >= 35? errorMessage.style.display = "block": errorMessage.style.display = "none"
         input.addEventListener('input', checkedValue);
 
 
-        form.addEventListener('submit', async event => {
+        form.onSubmit = async event => {
             event.preventDefault();
             const task = input.value;
             if (task.trim() === ""|| task.length>=35) {
                 form.reset(); 
-                p.style.display ="none";
+                errorMessagep.style.display ="none";
                 return;
             }
             
@@ -104,5 +99,7 @@
                 }
             }
         });
+        
+        getData();
 
  });
