@@ -59,15 +59,16 @@
             }
         });
          
-        input.addEventListener('input', event => 
-                                event.target.value.length >= 35? p.style.display = "block": p.style.display = "none");
+        const checkedValue = event => event.target.value.length >= 35? p.style.display = "block": p.style.display = "none"
+        input.addEventListener('input', checkedValue);
 
 
         form.addEventListener('submit', async event => {
             event.preventDefault();
             const task = input.value;
-            if (task.trim() === "") {
+            if (task.trim() === ""|| task.length>=35) {
                 form.reset(); 
+                p.style.display ="none";
                 return;
             }
             
